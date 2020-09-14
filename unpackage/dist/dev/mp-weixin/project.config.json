@@ -29,7 +29,7 @@
       "outputPath": ""
     },
     "useIsolateContext": true,
-    "useCompilerModule": false,
+    "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": []
@@ -38,6 +38,8 @@
   "libVersion": "",
   "appid": "wx8c9c8ba03ae5e52e",
   "projectname": "shangcheng",
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
   "condition": {
     "search": {
       "current": -1,
