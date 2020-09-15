@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import App from './App'
 
+// 请求封装注入vue实例的原型
 import request from './utils/request.js'
-
 Vue.prototype.$request = request
 
 Vue.config.productionTip = false
