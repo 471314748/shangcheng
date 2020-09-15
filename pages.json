@@ -1,56 +1,79 @@
 {
-	"pages": [
-		{
-			"path": "pages/home/home",
-			"style": {}
-		}, {
-			"path": "pages/category/category",
-			"style": {
-				"navigationBarTitleText": "分类"
-			}
-		}, {
-			"path": "pages/cart/cart",
-			"style": {
-				"navigationBarTitleText": "购物车"
-			}
-		}, {
-			"path": "pages/me/me",
-			"style": {
-				"navigationBarTitleText": "我的"
-			}
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "艾拉商城",
-		"navigationBarBackgroundColor": "#eb4450",
-		"backgroundColor": "#F8F8F8"
-	},
-	"tabBar": {
-		"color": "#7A7E83",
-		"selectedColor": "#eb4450",
-		"borderStyle": "black",
-		"backgroundColor": "#ffffff",
-		"list": [{
-			"pagePath": "pages/home/home",
-			"iconPath": "static/tabs/icon_home@3x.png",
-			"selectedIconPath": "static/tabs/icon_home_active@3x.png",
-			"text": "首页"
-		}, {
-			"pagePath": "pages/category/category",
-			"iconPath": "static/tabs/icon_category@3x.png",
-			"selectedIconPath": "static/tabs/icon_category_active@3x.png",
-			"text": "分类"
-		}, {
-			"pagePath": "pages/cart/cart",
-			"iconPath": "static/tabs/icon_cart@3x.png",
-			"selectedIconPath": "static/tabs/icon_cart_active@3x.png",
-			"text": "购物车"
-		}, {
-			"pagePath": "pages/me/me",
-			"iconPath": "static/tabs/icon_me@3x.png",
-			"selectedIconPath": "static/tabs/icon_me_active@3x.png",
-			"text": "我的"
-		}]
-	}
+  "easycom": {
+    "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+  },
+  "pages": [
+    {
+      "path": "pages/home/home",
+      "style": {}
+    },
+    {
+      "path": "pages/category/category",
+      "style": {
+        "navigationBarTitleText": "分类"
+      }
+    },
+    {
+      "path": "pages/cart/cart",
+      "style": {
+        "navigationBarTitleText": "购物车"
+      }
+    },
+    {
+      "path": "pages/me/me",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    },
+    {
+      "path": "pages/mallMenu1/mallMenu1",
+      "style": {
+        "navigationBarTitleText": "商品1"
+      }
+    },
+    {
+      "path": "pages/mallMenu2/mallMenu2",
+      "style": {
+        "navigationBarTitleText": "商品2"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "艾拉商城",
+    "navigationBarBackgroundColor": "#eb4450",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#eb4450",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "iconPath": "static/tabs/icon_home@3x.png",
+        "selectedIconPath": "static/tabs/icon_home_active@3x.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "iconPath": "static/tabs/icon_category@3x.png",
+        "selectedIconPath": "static/tabs/icon_category_active@3x.png",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "iconPath": "static/tabs/icon_cart@3x.png",
+        "selectedIconPath": "static/tabs/icon_cart_active@3x.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "iconPath": "static/tabs/icon_me@3x.png",
+        "selectedIconPath": "static/tabs/icon_me_active@3x.png",
+        "text": "我的"
+      }
+    ]
+  }
 }
