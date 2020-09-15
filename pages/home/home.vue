@@ -1,30 +1,27 @@
 <template>
 	<view class="home">
 		<!-- 搜索区域 -->
-		<view class="search-link">
-			<view class="inner">
-				<icon type="search" size="32rpx" color="#bbb" />
-				<text>搜索</text>
-			</view>
-		</view>
+		<searchLink></searchLink>
 		<!-- 轮播图 -->
 		<swiper indicator-dots indicator-color="rgba(255,255,255,.5)" indicator-active-color="#fff">
-			<swiper-item v-for="item in 4">
-				<image src="http://157.122.54.189:9090/pyg/banner1.png"></image>
+			<swiper-item v-for="(item, index) in swiperdata" :key="index">
+				<image :src="item.image_src"></image>
 			</swiper-item>
 		</swiper>
 		<!-- 导航 -->
 		<view class="nav">
-			<image v-for="item in 4" src="http://157.122.54.189:9090/pyg/icon_index_nav_4@2x.png" mode=""></image>
+			<image v-for="(item,index) in catitems" :key="index" :src="item.image_src" mode=""></image>
 		</view>
 		<!-- 楼层 -->
 		<view class="floor">
-			<view v-for="item in 4" class="floor-item">
-				<image src="http://157.122.54.189:9090/pyg/pic_floor01_title.png"></image>
+			<view v-for="(floor,floorIndex) in floordata" :key="floorIndex" class="floor-item">
+				<image :src="floor.floor_title.image_src"></image>
 				<view class="product">
-					<image src="http://157.122.54.189:9090/pyg/pic_floor01_1@2x.png" mode=""></image>
+					<image :src="floor.product_list[0].image_src" mode=""></image>
 					<view class="right">
-						<image v-for="item in 4" src="http://157.122.54.189:9090/pyg/pic_floor01_2@2x.png" mode=""></image>
+						<block v-for="(item,index) in floor.product_list" :key="index">
+							<image v-if="index" :src="item.image_src" mode=""></image>
+						</block>
 					</view>
 				</view>
 			</view>
@@ -34,40 +31,61 @@
 </template>
 
 <script>
+	import {
+		apiGetSwiperdata,
+		apiGetCatitems,
+		apiGetFloordata
+	} from '../../api/home.js'
+	import searchLink from '@/components/searchLink.vue'
 	export default {
+		components: {
+			searchLink
+		},
 		data() {
-			return {}
+			return {
+				// 轮播图数据
+				swiperdata: [],
+				// nav导航数据
+				catitems: [],
+				// 楼层数据
+				floordata: []
+			}
 		},
 		onLoad() {
-
+			this.getSwiperdata()
+			this.getCatitems()
+			this.getFloordata()
 		},
 		methods: {
-
+			// 轮播图
+			async getSwiperdata() {
+				// uni.request({
+				// 	url: 'https://www.uinav.com/api/public/v1/home/swiperdata',
+				// 	method: 'GET',
+				// 	data: {},
+				// 	success: res => {
+				// 		// console.log(res.data.message)
+				// 		this.swiperdata = res.data.message
+				// 	}
+				// })
+				let res = await apiGetSwiperdata()
+				this.swiperdata = res.data.message
+			},
+			// nav分类
+			async getCatitems() {
+				let res = await apiGetCatitems()
+				this.catitems = res.data.message
+			},
+			// 楼层
+			async getFloordata() {
+				let res = await apiGetFloordata()
+				this.floordata = res.data.message
+			}
 		}
 	}
 </script>
 
 <style lang="less" scoped>
-	// 搜索区域
-	.search-link {
-		// height: 100rpx;
-		background-color: red;
-		padding: 20rpx 16rpx;
-
-		.inner {
-			background-color: #fff;
-			height: 60rpx;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-
-			text {
-				color: #bbb;
-				margin-left: 16rpx;
-			}
-		}
-	}
-
 	// 轮播图
 	swiper {
 		height: 340rpx;
@@ -121,5 +139,6 @@
 			}
 		}
 	}
-	// 
+
+	//
 </style>
