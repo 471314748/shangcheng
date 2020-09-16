@@ -5,7 +5,8 @@
     "pages/cart/cart",
     "pages/me/me",
     "pages/mallMenu1/mallMenu1",
-    "pages/mallMenu2/mallMenu2"
+    "pages/mallMenu2/mallMenu2",
+    "pages/search_list/search_list"
   ],
   "subPackages": [],
   "window": {
@@ -46,5 +47,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap43.json"
 }

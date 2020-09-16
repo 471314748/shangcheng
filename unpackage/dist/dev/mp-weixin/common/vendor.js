@@ -10450,7 +10450,26 @@ function apiGetFloordata(data) {
 /* 53 */,
 /* 54 */,
 /* 55 */,
-/* 56 */,
+/* 56 */
+/*!**************************************************************!*\
+  !*** E:/某马/某马项目集合/微信小程序/项目文件夹/复习/shangcheng/api/category.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.getCategories = getCategories;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 37));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+// 请求商品分类数据
+function getCategories(data) {
+  return (0, _request.default)({
+    url: '/api/public/v1/categories',
+    method: 'get',
+    data: data });
+
+}
+
+/***/ }),
 /* 57 */,
 /* 58 */,
 /* 59 */,
@@ -10468,7 +10487,10 @@ function apiGetFloordata(data) {
 /* 71 */,
 /* 72 */,
 /* 73 */,
-/* 74 */
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */
 /*!**********************************************************************!*\
   !*** E:/某马/某马项目集合/微信小程序/项目文件夹/复习/shangcheng/common/classify.data.js ***!
   \**********************************************************************/
@@ -11561,9 +11583,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     "cat": 0 }] }];exports.default = _default;
 
 /***/ }),
-/* 75 */,
-/* 76 */,
-/* 77 */,
 /* 78 */,
 /* 79 */,
 /* 80 */,
@@ -11580,34 +11599,20 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* 91 */,
 /* 92 */,
 /* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */
-/*!**************************************************************!*\
-  !*** E:/某马/某马项目集合/微信小程序/项目文件夹/复习/shangcheng/api/category.js ***!
-  \**************************************************************/
+/* 94 */
+/*!************************************************************!*\
+  !*** E:/某马/某马项目集合/微信小程序/项目文件夹/复习/shangcheng/api/search.js ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getCategories = getCategories;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 37));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.getGoodsSearch = getGoodsSearch;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 37));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 // 请求商品分类数据
-function getCategories(data) {
+function getGoodsSearch(data) {
   return (0, _request.default)({
-    url: '/api/public/v1/categories',
+    url: '/api/public/v1/goods/search',
     method: 'get',
     data: data });
 

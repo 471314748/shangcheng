@@ -36,6 +36,14 @@
       "style": {
         "navigationBarTitleText": "商品2"
       }
+    },
+    {
+      "path": "pages/search_list/search_list",
+      "style": {
+        "navigationBarTitleText": "搜索列表",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 50
+      }
     }
   ],
   "globalStyle": {

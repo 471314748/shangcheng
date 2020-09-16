@@ -15,7 +15,7 @@
 	// 搜索区域
 	.search-link {
 		// height: 100rpx;
-		background-color: red;
+		background-color: #eb4450;
 		padding: 20rpx 16rpx;
 
 		.inner {

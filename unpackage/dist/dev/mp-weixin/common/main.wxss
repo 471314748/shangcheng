@@ -3304,15 +3304,14 @@ u-dropdown {
 
 
 /* end-头条小程序编译后页面有组件名的元素，特别处理--end */
-
-
-
-
-
-
-
-
-
-
-
+page {
+  color: #333;
+}
+.text-line2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 

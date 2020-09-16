@@ -14,15 +14,19 @@
 				<scroll-view scroll-y class="right-box" v-if="current==index">
 					<view class="page-view">
 						<view class="class-item">
+							<!-- 广告图片 -->
 							<view class="item-title-img">
 								<image src="../../static/images/titleImage.png" mode=""></image>
 							</view>
+							<!-- 广告下整体 -->
 							<block v-for="(item1, index1) in item.children" :key="index1">
 								<view class="item-title" v-if="item1.children">
 									/<text>{{item1.cat_name}}</text>/
 								</view>
+								<!-- 右每一项  -->
 								<view class="item-container">
-									<view class="thumb-box" v-for="(item2, index2) in item1.children" :key="index2">
+									<!-- 小商品 -->
+									<view class="thumb-box" v-for="(item2, index2) in item1.children" :key="index2"  @click="toSearchList(item2.cat_name)">
 										<image class="item-menu-image" :src="item2.cat_icon" mode=""></image>
 										<view class="item-menu-name">{{item2.cat_name}}</view>
 									</view>
@@ -55,7 +59,7 @@
 				menuItemHeight: 0, // 左边菜单item的高度
 			}
 		},
-		created() {
+		onLoad() {
 			this.getCategoriesdata()
 		},
 		methods: {
@@ -95,8 +99,14 @@
 			// 请求数据
 			async getCategoriesdata() {
 				let res = await getCategories()
-				console.log(res.data.message)
+				// console.log(res.data.message)
 				this.tabbar = res.data.message
+			},
+			// 点击每一项
+			toSearchList(catName) {
+				uni.navigateTo({
+					url: '/pages/search_list/search_list?catName='+catName,
+				});
 			}
 		}
 	}
