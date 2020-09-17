@@ -1,7 +1,7 @@
 // 封装网络请求
 // 基地址
 const BASE_URL = 'https://www.uinav.com'
-
+// const BASE_URL = 'https://ugo.botue.com'
 function request({
 	url,
 	method,

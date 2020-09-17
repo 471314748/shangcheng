@@ -1,40 +1,50 @@
 <template>
 	<view class="search_list">
-	<view>
-		<!-- 头部 -->
-		<view class="header">
-			<icon type="search" size="16" color="#bbb">
-			</icon>
-			<input type="text" v-model="search_val" @confirm="reload">
-		</view>
-		<!-- 过滤菜单 -->
-		<view class="filter-menu">
-			<view :class="{active:activeIndex===index}" v-for="(item, index) in menuList" :key="index" @click="selectMenu(index)">{{item}}
-			</view>
-		</view>
-		<!-- 商品列表 -->
-		<view class="goods-list">
-			<view class="goods" v-for="(item, index) in goodsList" :key="index">
-				<image :src="item.goods_small_logo" alt="">
-					<view class="right">
-						<view class="goods-name text-line2">{{item.goods_name}}</view>
-						<view class="price">￥<text>{{item.goods_price}}</text>.00</view>
+		<view>
+			<!-- 头部 -->
+			<view class="top-header" :style="{position:isFixed?'fixed':'static'}">
+
+				<view class="header">
+					<icon type="search" size="16" color="#bbb">
+					</icon>
+					<input type="text" v-model="search_val" @confirm="reload">
+				</view>
+				<!-- 过滤菜单 -->
+				<view class="filter-menu">
+					<view :class="{active:activeIndex===index}" v-for="(item, index) in menuList" :key="index" @click="selectMenu(index)">{{item}}
 					</view>
+				</view>
+
+			</view>
+			<!-- 商品列表 -->
+			<view class="goods-list">
+				<view class="goods" v-for="(item, index) in goodsList" :key="index">
+					<image :src="item.goods_small_logo" alt="">
+						<view class="right">
+							<view class="goods-name text-line2">{{item.goods_name}}</view>
+							<view class="price">￥<text>{{item.goods_price}}</text>.00</view>
+						</view>
+				</view>
+			</view>
+			<!-- 加载完提示 -->
+			<view class="btm-line" v-show="isLastPage">
+				呜呜呜，真的没有了
 			</view>
 		</view>
-	</view>
-	<!-- 骨架屏 -->
-	<!-- <u-skeleton :loading="loading" :animation="true" bg-color="pink"></u-skeleton> -->
+		<!-- 骨架屏 -->
+		<!-- <u-skeleton :loading="loading" :animation="true" bg-color="pink"></u-skeleton> -->
 	</view>
 </template>
 
 <script>
-	import { getGoodsSearch } from '@/api/search.js'
+	import {
+		getGoodsSearch
+	} from '@/api/search.js'
 	export default {
 		data() {
 			return {
 				// 骨架屏显示
-				loading: true,
+				// loading: true,
 				// 标签页
 				menuList: ['综合', '销量', '价格'],
 				// 数据
@@ -46,7 +56,13 @@
 				// 页码
 				pagenum: 1,
 				// 页容量
-				PAGE_SISE: 10
+				PAGE_SISE: 10,
+				// 是否请求中
+				isRequesting: false,
+				// 数据加载完没有
+				isLastPage: false,
+				// 头部是否定定位
+				isFixed: true
 			}
 		},
 		onLoad(options) {
@@ -54,37 +70,65 @@
 			this.search_val = options.catName
 			this.querySearchList()
 		},
-		methods:{
+		methods: {
 			// 点击下标
-			selectMenu (index) {
+			selectMenu(index) {
 				this.activeIndex = index
 			},
 			// 请求搜索数据
 			async querySearchList() {
+				uni.showLoading({
+					title: '加载中'
+				})
+				// 如果请求中，不继续请求了
+				if (this.isRequesting) {
+					return
+				}
+				this.isRequesting = true
 				let res = await getGoodsSearch({
 					query: this.search_val,
 					pagenum: this.pagenum,
 					pagesize: this.PAGE_SISE
 				})
+				this.isRequesting = false
 				this.goodsList = [...this.goodsList, ...res.data.message.goods]
-				console.log(this.goodsList)
-				this.loading = false;
+				console.log(this.goodsList.length, res.data.message.total)
+				// 判断加载完没有
+				if (this.goodsList.length == res.data.message.total) {
+					this.isLastPage = true
+				}
+				// 关闭加载
+				uni.hideLoading()
 			},
 			// search
-			reload(){
-				this.pagenum=1
+			reload() {
+				this.pagenum = 1
 				this.goodsList = []
 				this.querySearchList()
 			}
 		},
 		// 下拉生命周期
-		onPullDownRefresh(){
+		onPullDownRefresh() {
+			this.isFixed = false
+			if (this.isLastPage === true) {
+				this.isLastPage = false
+			}
 			this.reload()
+			setTimeout(() => {
+				uni.stopPullDownRefresh()
+			}, 500)
 		},
 		// 触底生命周期
-		onReachBottom(){
+		onReachBottom() {
+			if (this.isLastPage) {
+				return
+			}
 			this.pagenum++
 			this.querySearchList()
+		},
+		// 页面滚动
+		onPageScroll(){
+			this.isFixed = true
 		}
 	}
 </script>
@@ -114,11 +158,15 @@
 	}
 
 	.top-header {
-		position: sticky;
+		position: static;
 		top: 0;
 		left: 0;
 		right: 0;
 		background-color: #fff;
+	}
+
+	.marginTop {
+		margin-top: 220rpx;
 	}
 
 	.header {
