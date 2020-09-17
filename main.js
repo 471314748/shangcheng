@@ -3,7 +3,6 @@ import App from './App'
 
 import uView from "uview-ui"
 
-
 // 请求封装注入vue实例的原型
 import request from './utils/request.js'
 Vue.prototype.$request = request

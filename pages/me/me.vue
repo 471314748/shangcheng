@@ -1,6 +1,8 @@
 <template>
 	<view>
-		me
+		<u-navbar :is-back="false" title="666" :background="background">
+		</u-navbar>
+		666
 	</view>
 </template>
 
@@ -8,11 +10,14 @@
 	export default {
 		data() {
 			return {
-				
+				background:{
+					backgroundColor: '#39cccc'
+				}
+
 			}
 		},
 		methods: {
-			
+
 		}
 	}
 </script>

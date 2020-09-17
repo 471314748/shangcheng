@@ -4,7 +4,7 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "enhance": false,
     "postcss": true,
@@ -66,8 +66,8 @@
       "list": [
         {
           "id": -1,
-          "name": "pages/category/category",
-          "pathName": "pages/category/category",
+          "name": "pages/item/item",
+          "pathName": "pages/item/item",
           "scene": null
         }
       ]

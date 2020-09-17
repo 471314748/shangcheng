@@ -17,7 +17,7 @@
 
 			</view>
 			<!-- 商品列表 -->
-			<view class="goods-list">
+			<view class="goods-list" :style="{marginTop:isFixed?'220rpx':'0'}">
 				<view class="goods" v-for="(item, index) in goodsList" :key="index">
 					<image :src="item.goods_small_logo" alt="">
 						<view class="right">
@@ -92,7 +92,7 @@
 				})
 				this.isRequesting = false
 				this.goodsList = [...this.goodsList, ...res.data.message.goods]
-				console.log(this.goodsList.length, res.data.message.total)
+				// console.log(this.goodsList.length, res.data.message.total)
 				// 判断加载完没有
 				if (this.goodsList.length == res.data.message.total) {
 					this.isLastPage = true
@@ -163,33 +163,11 @@
 		left: 0;
 		right: 0;
 		background-color: #fff;
+		z-index:99;
 	}
 
-	.marginTop {
-		margin-top: 220rpx;
-	}
-
-	.header {
-		height: 120rpx;
-		padding: 30rpx 16rpx;
-		box-sizing: border-box;
-		background-color: #eee;
-		position: relative;
-
-		icon {
-			position: absolute;
-			top: 48rpx;
-			left: 44rpx;
-		}
-
-		input {
-			height: 60rpx;
-			width: 100%;
-			border-radius: 4rpx;
-			background-color: #fff;
-			padding-left: 80rpx;
-			box-sizing: border-box;
-		}
+	.goods-list {
+		// margin-top: 220rpx;
 	}
 
 	.filter-menu {

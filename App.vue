@@ -14,6 +14,7 @@
 
 <style lang="scss">
 @import "uview-ui/index.scss";
+@import url("@/css/icon.css");
 page{
     color:#333;
 }

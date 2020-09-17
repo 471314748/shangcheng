@@ -22,7 +22,9 @@
     {
       "path": "pages/me/me",
       "style": {
-        "navigationBarTitleText": "我的"
+        "navigationBarTitleText": "我的",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
       }
     },
     {
@@ -43,6 +45,12 @@
         "navigationBarTitleText": "搜索列表",
 				"enablePullDownRefresh": true,
 				"onReachBottomDistance": 50
+      }
+    },
+    {
+      "path": "pages/item/item",
+      "style": {
+        "navigationBarTitleText": "商品详情"
       }
     }
   ],
