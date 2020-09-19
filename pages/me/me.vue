@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar :is-back="false" title="666" :background="background">
+		<u-navbar height="43" :is-back="false" title="666" :background="background">
 		</u-navbar>
 		666
 	</view>

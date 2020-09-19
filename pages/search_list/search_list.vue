@@ -18,7 +18,7 @@
 			</view>
 			<!-- 商品列表 -->
 			<view class="goods-list" :style="{marginTop:isFixed?'220rpx':'0'}">
-				<view class="goods" v-for="(item, index) in goodsList" :key="index">
+				<view class="goods" v-for="(item, index) in goodsList" :key="index" @click="toItem(item.goods_id)">
 					<image :src="item.goods_small_logo" alt="">
 						<view class="right">
 							<view class="goods-name text-line2">{{item.goods_name}}</view>
@@ -105,6 +105,12 @@
 				this.pagenum = 1
 				this.goodsList = []
 				this.querySearchList()
+			},
+			// 跳转商品详情页面
+			toItem(id) {
+				uni.navigateTo({
+					url: '/pages/item/item?goodsId=' + id
+				});
 			}
 		},
 		// 下拉生命周期
@@ -127,7 +133,7 @@
 			this.querySearchList()
 		},
 		// 页面滚动
-		onPageScroll(){
+		onPageScroll() {
 			this.isFixed = true
 		}
 	}
@@ -163,7 +169,7 @@
 		left: 0;
 		right: 0;
 		background-color: #fff;
-		z-index:99;
+		z-index: 99;
 	}
 
 	.goods-list {
