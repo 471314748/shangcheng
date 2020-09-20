@@ -1,6 +1,8 @@
 <template>
 	<view class="category">
-		<searchLink></searchLink>
+		<navigator url="/pages/search/search" hover-class="none">
+			<searchLink></searchLink>
+		</navigator>
 		<view class="u-menu-wrap" v-if="tabbar.length">
 			<!-- 左边 -->
 			<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">

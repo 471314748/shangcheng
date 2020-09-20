@@ -46,12 +46,13 @@
 			<view class="icon-text">
 				<text class="iconfont icon-kefu"></text>
 				<text>联系客服</text>
+				<button type="default" open-type="contact">联系客服</button>
 			</view>
-			<view class="icon-text">
+			<view class="icon-text" @click="toCart">
 				<text class="iconfont icon-cart"></text>
 				<text>购物车</text>
 			</view>
-			<view class="btn add-cart-btn">加入购物车</view>
+			<view class="btn add-cart-btn" @click="add2art">加入购物车</view>
 			<view class="btn buy-btn">立即购买</view>
 		</view>
 	</view>
@@ -61,6 +62,9 @@
 	import {
 		getGoodsItem
 	} from '@/api/item.js'
+
+	const CART_KEY = 'cart'
+
 	export default {
 		data() {
 			return {
@@ -100,6 +104,34 @@
 					urls,
 					current: index
 				})
+			},
+			// 点击购物车
+			toCart() {
+				uni.switchTab({
+					url: '/pages/cart/cart'
+				})
+			},
+			// 加入购物车
+			add2art() {
+				// 取Storage数据
+				let cart = uni.getStorageSync(CART_KEY) || {}
+				// 更新数据
+				// 第一次添加，num:1,checred:true;
+				// 非首次添加num++,checred:true;
+				let goodsId = this.goodsId
+				if (cart[goodsId]) {
+					// 非首次
+					cart[goodsId].num = cart[goodsId].num + 1
+					cart[goodsId].checred = true
+				} else {
+					// 首次添加
+					cart[goodsId] = {
+						num: 1,
+						checred: true
+					}
+				}
+				// 存数据
+				uni.setStorageSync(CART_KEY, cart)
 			}
 		}
 	}
@@ -155,7 +187,7 @@
 				flex-direction: column;
 				align-items: center;
 				position: relative;
-				
+
 				button {
 					position: absolute;
 					opacity: 0;
@@ -242,6 +274,11 @@
 			align-items: center;
 			justify-content: center;
 			position: relative;
+
+			button {
+				position: absolute;
+				opacity: 0;
+			}
 		}
 
 		.btn {

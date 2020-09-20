@@ -1,7 +1,9 @@
 <template>
 	<view class="home">
 		<!-- 搜索区域 -->
-		<searchLink></searchLink>
+		<navigator url="/pages/search/search" hover-class="none">
+			<searchLink></searchLink>
+		</navigator>
 		<!-- 轮播图 -->
 		<swiper indicator-dots indicator-color="rgba(255,255,255,.5)" indicator-active-color="#fff">
 			<swiper-item v-for="(item, index) in swiperdata" :key="index">

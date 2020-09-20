@@ -47,6 +47,12 @@
 				"onReachBottomDistance": 50
       }
     },
+		{
+      "path": "pages/search/search",
+      "style": {
+        "navigationBarTitleText": "搜索"
+      }
+    },
     {
       "path": "pages/item/item",
       "style": {

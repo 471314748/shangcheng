@@ -4,11 +4,12 @@
 			<!-- 头部 -->
 			<view class="top-header" :style="{position:isFixed?'fixed':'static'}">
 
-				<view class="header">
+				<!-- <view class="header">
 					<icon type="search" size="16" color="#bbb">
 					</icon>
 					<input type="text" v-model="search_val" @confirm="reload">
-				</view>
+				</view> -->
+				<searchBar @search="searchHandler" :searchVal="search_val"></searchBar>
 				<!-- 过滤菜单 -->
 				<view class="filter-menu">
 					<view :class="{active:activeIndex===index}" v-for="(item, index) in menuList" :key="index" @click="selectMenu(index)">{{item}}
@@ -40,7 +41,11 @@
 	import {
 		getGoodsSearch
 	} from '@/api/search.js'
+	import searchBar from '@/components/searchBar.vue'
 	export default {
+		components:{
+			searchBar
+		},
 		data() {
 			return {
 				// 骨架屏显示
@@ -111,6 +116,11 @@
 				uni.navigateTo({
 					url: '/pages/item/item?goodsId=' + id
 				});
+			},
+			// 子传父搜索reload对应
+			searchHandler(inputVal) {
+				this.search_val = inputVal
+				this.reload()
 			}
 		},
 		// 下拉生命周期
