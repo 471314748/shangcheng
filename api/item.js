@@ -8,6 +8,15 @@ function getGoodsItem(goods_id) {
 	})
 }
 
+// 购物车需要展示的内容
+function apiGetGoodslist(goods_ids) {
+	return request({
+		url: '/api/public/v1/goods/goodslist?goods_ids='+goods_ids,
+		method: 'get'
+	})
+}
+
 export {
-	getGoodsItem
+	getGoodsItem,
+	apiGetGoodslist
 }

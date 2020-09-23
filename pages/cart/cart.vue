@@ -7,17 +7,18 @@
 		</view>
 		<!-- 商品列表 -->
 		<view class="goods-list">
-			<view class="goods-item" v-for="(item, index) in 3" :key="index">
-				<text class="iconfont icon-check"></text>
-				<image src="http://image1.suning.cn/uimg/b2c/newcatentries/0070134290-000000000149003877_1_400x400.jpg" alt="" />
+			<view class="goods-item" v-for="(item, index) in goodsList" :key="item.goodsId" @click="toItem(item.goodsId)">
+				<text class="iconfont" :class="item.checked?'icon-check':'icon-unchecked'" @click.stop="toggleCheck(item)"></text>
+				<image :src="item.goods_small_logo" alt="" />
 				<view class="right">
-					<text class="text-line2">spike 经典武士大马士革直刀(微型) 户外野营直刀 收藏礼品刀 饰品刀具</text>
+					<text class="text-line2">{{item.goods_name}}</text>
 					<view class="btm">
-						<text class="price">￥<text>100</text>.00</text>
+						<text class="price">￥<text>{{item.goods_price}}</text>.00</text>
 						<view class="goods-num">
-							<button>-</button>
-							<text>100</text>
-							<button>+</button>
+							<!-- <button>-</button>
+							<text>{{item.num}}</text>
+							<button>+</button> -->
+							<u-number-box disabled-input v-model="item.num" @change="valChange(item,index)"></u-number-box>
 						</view>
 					</view>
 				</view>
@@ -25,8 +26,10 @@
 		</view>
 		<view class="account">
 			<view class="select-all">
-				<text class="iconfont icon-unchecked"></text>
-				<text>全选</text>
+				<view>
+					<text class="iconfont" :class="isAll?'icon-check':'icon-unchecked'"></text>
+					<text>全选</text>
+				</view>
 				<view class="price-wrapper">
 					<view class="price">
 						<text>合计:<text class="num">￥100.00</text></text>
@@ -42,10 +45,86 @@
 </template>
 
 <script>
+	import {
+		apiGetGoodslist
+	} from '../../api/item.js'
+
+	const CART_KEY = 'cart'
+
 	export default {
 		data() {
 			return {
-				
+				goodsList: [],
+				cart: []
+			}
+		},
+		onShow() {
+			// 请求本地数据
+			this.cart = uni.getStorageSync(CART_KEY) || []
+			let idsArr = this.cart.map(item => {
+				return item.goodsId
+			})
+			let idsStr = idsArr.join(',')
+			// console.log(idsStr);
+			this.query(idsStr)
+		},
+		methods: {
+			// 请求数据
+			async query(idsStr) {
+				let res = await apiGetGoodslist(idsStr)
+				// console.log(res.data.message)
+				this.goodsList = res.data.message
+				// 数组里的对象融合cart
+				this.goodsList = this.cart.map(item => {
+					let ch = this.goodsList.find(goodItem => {
+						return item.goodsId == +goodItem.goods_id
+					})
+					return { ...item,
+						...ch
+					}
+				})
+			},
+			// 跳商品详情
+			toItem(goodsId) {
+				uni.navigateTo({
+					url: '/pages/item/item?goodsId=' + goodsId
+				})
+			},
+			// 商品复选框点击勾选/不勾选
+			toggleCheck(item) {
+				console.log(item.checked);
+				item.checked = !item.checked
+			},
+			// 输入框改变触发
+			valChange(item,index){
+				if(item.num<1) {
+					console.log('删除数据');
+					uni.showModal({
+						title: '提示',
+						content: '你确认要删除商品吗？',
+						success: res => {
+							if(res.confirm){
+								// 删除数据
+								this.goodsList.splice(index, 1)
+							}
+						},
+					});
+				}
+			}
+		},
+		computed: {
+			// 全选
+			isAll: {
+				get(){
+					return this.goodsList.every(item => {
+						return item.checked
+					})
+				},
+				set(){
+					this.goodsList.forEach(item => {
+						item.checked = status
+					})
+				}
 			}
 		}
 	}

@@ -114,25 +114,44 @@
 			// 加入购物车
 			add2art() {
 				// 取Storage数据
-				let cart = uni.getStorageSync(CART_KEY) || {}
+				let cart = uni.getStorageSync(CART_KEY) || []
+				let goodsId = this.goodsId
 				// 更新数据
 				// 第一次添加，num:1,checred:true;
 				// 非首次添加num++,checred:true;
-				let goodsId = this.goodsId
-				if (cart[goodsId]) {
-					// 非首次
-					cart[goodsId].num = cart[goodsId].num + 1
-					cart[goodsId].checred = true
+				// 遍历找下标,存在返回下标，不存在返回-1
+				let targetIndex = cart.findIndex(item => {
+					return item.goodsId === goodsId
+				})
+				if (targetIndex > -1) {
+					// 非首次添加，checked:true,num++
+					let targetGoods = Object.assign(cart[targetIndex])
+					// let targetGoods = cart[targetIndex]
+					targetGoods.checked = true
+					targetGoods.num = targetGoods.num + 1
+					// 把targetGoods插入到最前面cart.findIndex
+					cart.splice(targetIndex, 1)
+					cart.unshift(targetGoods)
 				} else {
-					// 首次添加
-					cart[goodsId] = {
-						num: 1,
-						checred: true
-					}
+					// 首次添加,{checked:true,num:1}插入到数组的最前面
+					cart.unshift({
+						// goodsId:goodId
+						goodsId,
+						checked: true,
+						num: 1
+					})
 				}
 				// 存数据
 				uni.setStorageSync(CART_KEY, cart)
-			}
+				// 提交加入购物车成功
+				uni.showToast({
+					title: '加入购物车成功！'
+				})
+				// 跳转购物车
+				uni.switchTab({
+					url:'/pages/cart/cart'
+				})
+			},
 		}
 	}
 </script>
