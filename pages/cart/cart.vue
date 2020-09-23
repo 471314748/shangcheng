@@ -96,14 +96,13 @@
 				item.checked = !item.checked
 			},
 			// 输入框改变触发
-			valChange(item,index){
-				if(item.num<1) {
-					console.log('删除数据');
+			valChange(item, index) {
+				if (item.num < 1) {
 					uni.showModal({
 						title: '提示',
 						content: '你确认要删除商品吗？',
 						success: res => {
-							if(res.confirm){
+							if (res.confirm) {
 								// 删除数据
 								this.goodsList.splice(index, 1)
 							}
@@ -115,12 +114,12 @@
 		computed: {
 			// 全选
 			isAll: {
-				get(){
+				get() {
 					return this.goodsList.every(item => {
 						return item.checked
 					})
 				},
-				set(){
+				set() {
 					this.goodsList.forEach(item => {
 						item.checked = status
 					})
