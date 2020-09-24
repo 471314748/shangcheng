@@ -26,18 +26,18 @@
 		</view>
 		<view class="account">
 			<view class="select-all">
-				<view>
+				<view @click="toggleAll">
 					<text class="iconfont" :class="isAll?'icon-check':'icon-unchecked'"></text>
 					<text>全选</text>
 				</view>
 				<view class="price-wrapper">
 					<view class="price">
-						<text>合计:<text class="num">￥100.00</text></text>
+						<text>合计:<text class="num">￥{{totalPrice}}.00</text></text>
 						<view>
 							<text class="info">包含运费</text>
 						</view>
 					</view>
-					<view class="account-btn">结算(3)</view>
+					<view class="account-btn">结算({{totalNum}})</view>
 				</view>
 			</view>
 		</view>
@@ -59,7 +59,7 @@
 			}
 		},
 		onShow() {
-			// 请求本地数据
+			// 请求本地数据status 
 			this.cart = uni.getStorageSync(CART_KEY) || []
 			let idsArr = this.cart.map(item => {
 				return item.goodsId
@@ -72,7 +72,6 @@
 			// 请求数据
 			async query(idsStr) {
 				let res = await apiGetGoodslist(idsStr)
-				// console.log(res.data.message)
 				this.goodsList = res.data.message
 				// 数组里的对象融合cart
 				this.goodsList = this.cart.map(item => {
@@ -92,8 +91,12 @@
 			},
 			// 商品复选框点击勾选/不勾选
 			toggleCheck(item) {
-				console.log(item.checked);
+				// console.log(item.checked);
 				item.checked = !item.checked
+			},
+			// 全选图标勾选/不勾选
+			toggleAll() {
+				this.isAll = !this.isAll
 			},
 			// 输入框改变触发
 			valChange(item, index) {
@@ -114,16 +117,49 @@
 		computed: {
 			// 全选
 			isAll: {
+				// 依赖发送改变
 				get() {
 					return this.goodsList.every(item => {
 						return item.checked
 					})
 				},
-				set() {
+				// isAll改变
+				set(status) {
+					console.log('55'.status);
 					this.goodsList.forEach(item => {
 						item.checked = status
 					})
 				}
+			},
+			// 数量总和
+			totalNum() {
+				return this.goodsList.reduce((sum, item) => {
+					return sum + (item.checked ? item.num : 0)
+				}, 0)
+			},
+			// 所有选中的商品数量*商品价格之和
+			totalPrice() {
+				return this.goodsList.reduce((sum, item) => {
+					return sum + (item.checked ? item.num * item.goods_price : 0)
+				}, 0)
+			}
+		},
+		// 监听器
+		watch: {
+			goodsList: {
+				handler(newValue) {
+					// console.log('改变', newValue);
+					// this.cart = uni.getStorageSync(CART_KEY) || []
+					let cart = this.goodsList.map(item=>{
+						return {
+							goodsId:item.goodsId,
+							num:item.num,
+							checked:item.checked
+						}
+					})
+					uni.setStorageSync(CART_KEY, cart)
+				},
+				deep: true
 			}
 		}
 	}

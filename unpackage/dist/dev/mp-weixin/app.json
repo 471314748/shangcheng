@@ -8,7 +8,8 @@
     "pages/mallMenu2/mallMenu2",
     "pages/search_list/search_list",
     "pages/search/search",
-    "pages/item/item"
+    "pages/item/item",
+    "pages/login/login"
   ],
   "subPackages": [],
   "window": {
@@ -50,5 +51,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap95.json"
+  "sitemapLocation": "sitemap16.json"
 }
