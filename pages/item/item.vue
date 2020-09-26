@@ -120,9 +120,20 @@
 				// 第一次添加，num:1,checred:true;
 				// 非首次添加num++,checred:true;
 				// 遍历找下标,存在返回下标，不存在返回-1
-				let targetIndex = cart.findIndex(item => {
-					return item.goodsId === goodsId
-				})
+				// 做一次判断
+				// console.log(cart.length);
+				// if (cart.length) {
+				if (cart.length !== 0) {
+					// console.log('cart!=[]');
+					var targetIndex = cart.findIndex(item => {
+						return item.goodsId === goodsId
+					})
+				} else {
+					// console.log('[]');
+					var targetIndex = -1
+				}
+
+
 				if (targetIndex > -1) {
 					// 非首次添加，checked:true,num++
 					let targetGoods = Object.assign(cart[targetIndex])
@@ -141,6 +152,7 @@
 						num: 1
 					})
 				}
+				// }
 				// 存数据
 				uni.setStorageSync(CART_KEY, cart)
 				// 提交加入购物车成功
@@ -148,9 +160,9 @@
 					title: '加入购物车成功！'
 				})
 				// 跳转购物车
-				uni.switchTab({
-					url:'/pages/cart/cart'
-				})
+				// uni.switchTab({
+				// 	url: '/pages/cart/cart'
+				// })
 			},
 		}
 	}

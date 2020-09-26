@@ -59,7 +59,8 @@
 			}
 		},
 		onShow() {
-			// 请求本地数据status 
+			// console.log(6666);
+			// 请求本地数据status
 			this.cart = uni.getStorageSync(CART_KEY) || []
 			let idsArr = this.cart.map(item => {
 				return item.goodsId
@@ -108,6 +109,12 @@
 							if (res.confirm) {
 								// 删除数据
 								this.goodsList.splice(index, 1)
+							} else if (res.cancel) {
+								// this.goodsList[index].num = 1
+								let change = this.goodsList[index]
+								change.num = 1
+								console.log(change);
+								this.$set(this.goodsList, index, change)
 							}
 						},
 					});
@@ -148,13 +155,13 @@
 		watch: {
 			goodsList: {
 				handler(newValue) {
-					// console.log('改变', newValue);
+					console.log('改变', newValue);
 					// this.cart = uni.getStorageSync(CART_KEY) || []
-					let cart = this.goodsList.map(item=>{
+					let cart = this.goodsList.map(item => {
 						return {
-							goodsId:item.goodsId,
-							num:item.num,
-							checked:item.checked
+							goodsId: item.goodsId,
+							num: item.num,
+							checked: item.checked
 						}
 					})
 					uni.setStorageSync(CART_KEY, cart)
