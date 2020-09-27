@@ -36,6 +36,7 @@
 							rawData,
 							code
 						})
+						// 无法获取token,bug
 						console.log('需要切换老师的appid,在utils/request.js文件夹');
 						console.log('data', data);
 						uni.setStorageSync('token', data.token);
@@ -46,6 +47,7 @@
 							success: () => {
 								// 并不是toast消失时候,是toast出现时候
 								setTimeout(() => {
+									// 回到上一个页面
 									uni.navigateBack();
 								}, 500);
 							}

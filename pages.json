@@ -63,6 +63,12 @@
 			"style": {
 				"navigationBarTitleText": "微信授权登录"
 			}
+		},
+		{
+			"path": "pages/pay/pay",
+			"style": {
+				"navigationBarTitleText": "支付"
+			}
 		}
 	],
 	"globalStyle": {

@@ -37,7 +37,7 @@
 							<text class="info">包含运费</text>
 						</view>
 					</view>
-					<view class="account-btn">结算({{totalNum}})</view>
+					<view class="account-btn" @click="toPay">结算({{totalNum}})</view>
 				</view>
 			</view>
 		</view>
@@ -62,6 +62,9 @@
 			// console.log(6666);
 			// 请求本地数据status
 			this.cart = uni.getStorageSync(CART_KEY) || []
+			if(!this.cart){
+				return
+			}
 			let idsArr = this.cart.map(item => {
 				return item.goodsId
 			})
@@ -119,6 +122,26 @@
 						},
 					});
 				}
+			},
+			// 结算，跳支付页面
+			toPay(){
+				// 五数量，提示
+				if(!this.totalNum){
+					uni.showToast({
+						title: '请选择点商品吧',
+					})
+					return
+				}
+				// 未登录，跳登录
+				if(!uni.getStorageSync('userInfo')){
+					uni.navigateTo({
+						url: '../login/login'
+					})
+				}
+				// 一切正常跳转
+				uni.navigateTo({
+					url: '../pay/pay'
+				})
 			}
 		},
 		computed: {

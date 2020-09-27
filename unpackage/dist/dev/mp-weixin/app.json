@@ -9,7 +9,8 @@
     "pages/search_list/search_list",
     "pages/search/search",
     "pages/item/item",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/pay/pay"
   ],
   "subPackages": [],
   "window": {
@@ -51,5 +52,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap8.json"
+  "sitemapLocation": "sitemap90.json"
 }
