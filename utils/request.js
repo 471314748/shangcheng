@@ -8,12 +8,30 @@ const BASE_URL = 'https://www.uinav.com'
 function request({
 	url,
 	method,
+	isAuth,
 	data
 }) {
 	return new Promise((resolve, reject) => {
+		// 接口不需要传token,默认值为{}
+		let header = {}
+		
+		if (isAuth) {
+			// 接口需要传token
+			let token = uni.getStorageSync('token')
+			// 接口需要token，但是没有登录态，跳转登录页
+			if(!token){
+				uni.navigateTo({
+					url: '/pages/login/login'
+				})
+				return 
+			}
+			header.Authorization = token
+		}
+		
 		uni.request({
 			url: BASE_URL + url,
 			method,
+			header,
 			data,
 			success: res => {
 				resolve(res)

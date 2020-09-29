@@ -10,7 +10,10 @@
     "pages/search/search",
     "pages/item/item",
     "pages/login/login",
-    "pages/pay/pay"
+    "pages/pay/pay",
+    "pages/order/order",
+    "pages/order_detail/order_detail",
+    "pages/order_result/order_result"
   ],
   "subPackages": [],
   "window": {
@@ -52,5 +55,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap90.json"
+  "sitemapLocation": "sitemap66.json"
 }

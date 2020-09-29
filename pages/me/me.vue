@@ -79,7 +79,7 @@
 		},
 		onShow() {
 			this.userInfo = wx.getStorageSync('userInfo') || {}
-			console.log(this.userInfo);
+			console.log('this.userInfo', this.userInfo);
 		},
 		methods:{
 			// 跳转登录页面

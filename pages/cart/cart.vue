@@ -62,6 +62,16 @@
 			// console.log(6666);
 			// 请求本地数据status
 			this.cart = uni.getStorageSync(CART_KEY) || []
+			if(this.cart.length>0){
+				uni.setTabBarBadge({
+					index: 2,
+					text: this.cart.length+''
+				})
+			} else{
+				uni.removeTabBarBadge({
+					index: 2
+				})
+			}
 			if(!this.cart){
 				return
 			}

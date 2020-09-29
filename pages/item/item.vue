@@ -53,7 +53,7 @@
 				<text>购物车</text>
 			</view>
 			<view class="btn add-cart-btn" @click="add2art">加入购物车</view>
-			<view class="btn buy-btn">立即购买</view>
+			<view class="btn buy-btn" @click="toPay">立即购买</view>
 		</view>
 	</view>
 </template>
@@ -164,6 +164,12 @@
 				// 	url: '/pages/cart/cart'
 				// })
 			},
+			// 跳支付页面
+			toPay(){
+				uni.navigateTo({
+					url: '/pages/pay/pay?goodsId='+this.goodsDetail.goods_id
+				})
+			}
 		}
 	}
 </script>

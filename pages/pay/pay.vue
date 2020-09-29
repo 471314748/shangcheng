@@ -46,7 +46,7 @@
 		apiGetGoodslist
 	} from '../../api/item.js'
 	import {
-		createOrders
+		createOrders, getDoPay
 	} from '../../api/payment.js'
 
 	const CART_KEY = 'cart'
@@ -59,7 +59,21 @@
 				goodsList: []
 			}
 		},
-		onLoad() {
+		onLoad(options) {
+			// 商详跳转过来的
+			this.goodsId = parseInt(options.goodsId)
+			let idsStr = ''
+			// console.log(goodsId);
+			if (this.goodsId) {
+				console.log('直接买的');
+				// 如果从商详跳转,构造一个cart
+				this.cart = [{
+					goodsId: this.goodsId,
+					num: 1
+				}]
+				idsStr = this.goodsId
+			} else {
+				console.log('购物车买的');
 			// console.log(6666);
 			// 请求本地数据status
 			this.cart = uni.getStorageSync(CART_KEY) || []
@@ -69,10 +83,12 @@
 			if (!this.cart.length) {
 				return
 			}
+			console.log(this.cart);
 			let idsArr = this.cart.map(item => {
 				return item.goodsId
 			})
-			let idsStr = idsArr.join(',')
+			idsStr = idsArr.join(',')
+			}
 			// console.log(idsStr);
 			this.query(idsStr)
 		},
@@ -143,17 +159,22 @@
 				this.createOrder()
 			},
 			// 订单创建
-			createOrder() {
+			async createOrder() {
 				let consignee_addr = this.getConsigneeAddr()
 				// console.log(consignee_addr);
 				let goods = this.getOrderGoods()
 				// console.log(goods);
 				// return
-				createOrders({
+				let data = await createOrders({
 					order_price: this.totalPrice,
 					consignee_addr,
 					goods
 				})
+				// 删除商品,如果商品详情过来，不删除
+				!this.goodsId&&this.arrangeCart()
+				this.orderNumber = data.order_number
+				// 获取支付参数
+				this.doPay()
 			},
 			// 收货地址
 			getConsigneeAddr() {
@@ -161,7 +182,7 @@
 				+ this.address.countyName + this.address.detailInfo+
 				' '+ this.address.userName + ' ' + this.address.telNumber
 			},
-			// 创建订单
+			// 创建订单'参数'
 			getOrderGoods(){
 				return this.goodsList.map(item=>{
 					return {
@@ -170,15 +191,73 @@
 						goods_price: item.goods_price
 					}
 				})
-			}
+			},
+			// 获取请求参数
+			async doPay(){
+				let res = await getDoPay({
+					order_number: this.orderNumber
+				})
+				// console.log(res);
+				// 唤起微信支付
+				uni.requestPayment({
+					...res.pay,
+					success: (res) => {
+						uni.showModal({
+							title: '提示',
+							content: '微信支付成功',
+							showCancel: false,
+							success: () => {
+								// 跳转订单结果页
+								uni.navigateTo({
+									url: '/pages/order_result/order_result'
+								})
+							}
+						})
+					},
+					fail: (res) => {
+						uni.showModal({
+							title: '提示',
+							content: '微信支付失败',
+							showCancel: false,
+							success: () => {
+								// 跳转订单结果页
+								uni.navigateTo({
+									url: '/pages/order_result/order_result?orderNumber=' + this.orderNumber
+								})
+							}
+						})
+					}
+				})
+			},
+			//删除storage cart里面选中的商品
+			arrangeCart() {
+				// 取
+				let cart = uni.getStorageSync(CART_KEY) || []
+				// 更新
+				if(!cart){
+					return
+				}
+				cart = cart.filter(item=>{
+					// 取没有选中的
+					return !item.checked
+				})
+				// 存
+				uni.setStorageSync(CART_KEY, cart)
+			},
 		},
 		// 计算属性，计算价格
 		computed: {
 			// 所有选中的商品数量*商品价格之和
 			totalPrice() {
-				return this.goodsList.reduce((sum, item) => {
-					return sum + (item.checked ? item.num * item.goods_price : 0)
-				}, 0)
+				// if(this.goodsId){
+					return this.goodsList.reduce((sum, item) => {
+						return sum + item.num * item.goods_price
+					}, 0)
+				// } else {
+				// 	return this.goodsList.reduce((sum, item) => {
+				// 		return sum + (item.checked ? item.num * item.goods_price : 0)
+				// 	}, 0)
+				// }
 			}
 		}
 	}

@@ -69,6 +69,24 @@
 			"style": {
 				"navigationBarTitleText": "支付"
 			}
+		},
+		{
+			"path": "pages/order/order",
+			"style": {
+				"navigationBarTitleText": "订单列表"
+			}
+		},
+		{
+			"path": "pages/order_detail/order_detail",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
+			"path": "pages/order_result/order_result",
+			"style": {
+				"navigationBarTitleText": "订单结果"
+			}
 		}
 	],
 	"globalStyle": {
