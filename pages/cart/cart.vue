@@ -62,17 +62,17 @@
 			// console.log(6666);
 			// 请求本地数据status
 			this.cart = uni.getStorageSync(CART_KEY) || []
-			if(this.cart.length>0){
+			if (this.cart.length > 0) {
 				uni.setTabBarBadge({
 					index: 2,
-					text: this.cart.length+''
+					text: this.cart.length + ''
 				})
-			} else{
+			} else {
 				uni.removeTabBarBadge({
 					index: 2
 				})
 			}
-			if(!this.cart){
+			if (!this.cart) {
 				return
 			}
 			let idsArr = this.cart.map(item => {
@@ -123,10 +123,14 @@
 								// 删除数据
 								this.goodsList.splice(index, 1)
 							} else if (res.cancel) {
+								// console.log('取消6666', this.goodsList[index]);
 								// this.goodsList[index].num = 1
+								// console.log('取消777', this.goodsList[index]);
+								this.$set(this.goodsList[index], 'num', 1)
+								// console.log('取消888', this.goodsList[index]);
 								let change = this.goodsList[index]
 								change.num = 1
-								console.log(change);
+								// console.log(change);
 								this.$set(this.goodsList, index, change)
 							}
 						},
@@ -134,16 +138,16 @@
 				}
 			},
 			// 结算，跳支付页面
-			toPay(){
+			toPay() {
 				// 五数量，提示
-				if(!this.totalNum){
+				if (!this.totalNum) {
 					uni.showToast({
 						title: '请选择点商品吧',
 					})
 					return
 				}
 				// 未登录，跳登录
-				if(!uni.getStorageSync('userInfo')){
+				if (!uni.getStorageSync('userInfo')) {
 					uni.navigateTo({
 						url: '../login/login'
 					})
@@ -165,7 +169,7 @@
 				},
 				// isAll改变
 				set(status) {
-					console.log('55'.status);
+					// console.log('55'.status);
 					this.goodsList.forEach(item => {
 						item.checked = status
 					})
@@ -188,7 +192,7 @@
 		watch: {
 			goodsList: {
 				handler(newValue) {
-					console.log('改变', newValue);
+					// console.log('改变', newValue);
 					// this.cart = uni.getStorageSync(CART_KEY) || []
 					let cart = this.goodsList.map(item => {
 						return {

@@ -18,7 +18,7 @@
 
 			</view>
 			<!-- 商品列表 -->
-			<view class="goods-list" :style="{marginTop:isFixed?'220rpx':'0'}">
+			<view class="goods-list" :style="{marginTop:isFixed?'220rpx':'20rpx'}">
 				<view class="goods" v-for="(item, index) in goodsList" :key="index" @click="toItem(item.goods_id)">
 					<image :src="item.goods_small_logo" alt="">
 						<view class="right">
@@ -67,7 +67,7 @@
 				// 数据加载完没有
 				isLastPage: false,
 				// 头部是否定定位
-				isFixed: true
+				isFixed: false
 			}
 		},
 		onLoad(options) {
@@ -174,10 +174,11 @@
 	}
 
 	.top-header {
-		position: static;
+		// position: static;
+		// top: 88rpx;
 		top: 0;
 		left: 0;
-		right: 0;
+		// right: 0;
 		background-color: #fff;
 		z-index: 99;
 	}

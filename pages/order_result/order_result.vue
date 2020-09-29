@@ -20,11 +20,11 @@ export default {
   methods: {
     toIndex () {
       // 跳转到首页
-      uni.switchTab({ url: '/pages/home/main' })
+      uni.switchTab({ url: '/pages/home/home' })
     },
     toOrderDetail () {
     // 跳转订单详情，传递orderNubmer
-      uni.navigateTo({ url: '/pages/order_detail/main?orderNumber=' + this.orderNumber })
+      uni.navigateTo({ url: '/pages/order_detail/order_detail?orderNumber=' + this.orderNumber })
     }
   }
 }

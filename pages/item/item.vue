@@ -157,7 +157,7 @@
 				uni.setStorageSync(CART_KEY, cart)
 				// 提交加入购物车成功
 				uni.showToast({
-					title: '加入购物车成功！'
+					title: '加入购物车成功'
 				})
 				// 跳转购物车
 				// uni.switchTab({
